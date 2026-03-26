@@ -2,21 +2,23 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define STUDENT_COUNT 10
+
 int main() {
-    int grades[10];
+    int grades[STUDENT_COUNT];
     int sum = 0;
     double average;
 
     srand(time(NULL));
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < STUDENT_COUNT; i++) {
         grades[i] = rand() % 101;
         sum += grades[i];
-        
-        printf("%d번 학생 성적: %d점\n", i + 1, grades[i]);
+
+        printf("%2d번 학생 성적: %3d점\n", i + 1, grades[i]);
     }
 
-    average = (double)sum / 10;
+    average = (double)sum / STUDENT_COUNT;
 
     printf("---------------------------\n");
     printf("전체 학생 점수 합계: %d점\n", sum);
