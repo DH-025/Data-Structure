@@ -30,13 +30,8 @@ int main() {
     printf("유효하지 않은 학생 번호입니다.\n");
   }
 
-  printf("\n--- 전체 학생 ---\n");
   printScore(scores, 30, average, 0);
-
-  printf("\n--- 평균 이상 학생 ---\n");
   printScore(scores, 30, average, 1);
-
-  printf("\n--- 평균 미만 학생 ---\n");
   printScore(scores, 30, average, 2);
 
   return 0;
@@ -58,16 +53,33 @@ int getStudentScore(int scores[], int size, int studentNumber) {
 }
 
 void printScore(int scores[], int size, double average, int option) {
-  if (option < 0 || option > 2) {
-    printf("잘못된 옵션입니다.\n");
-    return;
-  }
-
-  for (int i = 0; i < size; i++) {
-    if (option == 0 || (option == 1 && scores[i] >= average) ||
-        (option == 2 && scores[i] < average)) {
-
-      printf("%2d번 학생: %3d점\n", i + 1, scores[i]);
+  switch (option) {
+  case 0:
+    for (int i = 0; i < size; i++) {
+      printf("학생 번호: %d, 점수: %d\n", i + 1, scores[i]);
     }
+    break;
+
+  case 1:
+    printf("평균 이상 학생\n");
+    for (int i = 0; i < size; i++) {
+      if (scores[i] >= average) {
+        printf("학생 번호: %d, 점수: %d\n", i + 1, scores[i]);
+      }
+    }
+    break;
+
+  case 2:
+    printf("평균 미만 학생\n");
+    for (int i = 0; i < size; i++) {
+      if (scores[i] < average) {
+        printf("학생 번호: %d, 점수: %d\n", i + 1, scores[i]);
+      }
+    }
+    break;
+
+  default:
+    printf("유효하지 않은 옵션입니다.\n");
+    break;
   }
 }
