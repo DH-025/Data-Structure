@@ -1,37 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-  char input[101];
-  char *stack;
-  int top = -1;
-  int length = 0;
+#define MAX 100
 
-  printf("문자열을 입력하세요: ");
-  fgets(input, sizeof(input), stdin);
+typedef struct {
+  int data[MAX];
+  int top;
+} Stack;
 
-  while (input[length] != '\0') {
-    length++;
+void initStack(Stack *s) { s->top = -1; }
+
+int isEmpty(Stack *s) { return s->top == -1; }
+
+int isFull(Stack *s) { return s->top == MAX - 1; }
+
+void push(Stack *s, int value) {
+  if (isFull(s)) {
+    printf("Stack overflow! Cannot push %d\n", value);
+    return;
   }
+  s->data[++(s->top)] = value;
+}
 
-  if (input[length - 1] == '\n') {
-    input[length - 1] = '\0';
-    length--;
+int pop(Stack *s) {
+  if (isEmpty(s)) {
+    printf("Stack underflow! Cannot pop\n");
+    return -1;
   }
+  return s->data[(s->top)--];
+}
 
-  stack = (char *)malloc(sizeof(char) * length);
-
-  for (int i = 0; i < length; i++) {
-    stack[++top] = input[i];
+int peek(Stack *s) {
+  if (isEmpty(s)) {
+    printf("Stack is empty! Cannot peek\n");
+    return -1;
   }
+  return s->data[s->top];
+}
 
-  printf("거꾸로 출력된 문자열: ");
-  while (top >= 0) {
-    printf("%c", stack[top--]);
+void display(Stack *s) {
+  if (isEmpty(s)) {
+    printf("Stack is empty!\n");
+    return;
+  }
+  printf("Stack contents: ");
+  for (int i = 0; i <= s->top; i++) {
+    printf("%d ", s->data[i]);
   }
   printf("\n");
+}
 
-  free(stack);
+int main() {
+  Stack s;
+  char str[MAX];
+  initStack(&s);
+
+  printf("문자열 입력: ");
+  fgets(str, MAX, stdin);
+
+  for (int i = 0; str[i] != '\0'; i++)
+    push(&s, str[i]);
+  printf("거꾸로 된 문자열: ");
+  while (!isEmpty(&s)) {
+    printf("%c", pop(&s));
+  }
+  printf("\n");
 
   return 0;
 }
