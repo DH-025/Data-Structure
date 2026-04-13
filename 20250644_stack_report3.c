@@ -6,7 +6,7 @@
 #define MAX 100
 
 typedef struct {
-  int data[MAX];
+  int data[MAX]; // 계산 위해 int로 변경
   int top;
 } Stack;
 
@@ -47,6 +47,7 @@ int precedence(char op) {
   return -1;
 }
 
+// 후위표기식 계산
 int evaluatePostfix(char *postfix) {
   Stack s;
   initStack(&s);
@@ -84,6 +85,7 @@ int evaluatePostfix(char *postfix) {
   return pop(&s);
 }
 
+// 중위 → 후위 변환
 int infixToPostfix(char *infix, char *postfix) {
   Stack s;
   initStack(&s);
@@ -101,7 +103,7 @@ int infixToPostfix(char *infix, char *postfix) {
       while (!isEmpty(&s) && peek(&s) != '(') {
         postfix[j++] = pop(&s);
       }
-      pop(&s);
+      pop(&s); // '(' 제거
     } else {
       while (!isEmpty(&s) && precedence(peek(&s)) >= precedence(ch)) {
         postfix[j++] = pop(&s);
