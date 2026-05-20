@@ -90,7 +90,7 @@ int getMax(TreeNode* node) {
     return maxVal;
 }
 //특정 범위 탐색
-void searchRange(Tree* node, int min, int max) {
+void searchRange(TreeNode* node, int min, int max) {
     if (node == NULL) return;
     
     searchRange(node->left, min, max);
@@ -99,8 +99,8 @@ void searchRange(Tree* node, int min, int max) {
         printf("%d ", node->data);
     }
     
-    serchRange(node->right, min, max);
-    
+    searchRange(node->right, min, max);
+}
 int main() {
     // 트리 구성
     TreeNode* root = createNode(10);
